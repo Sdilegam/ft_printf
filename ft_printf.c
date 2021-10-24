@@ -3,96 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdi-lega <sdi-lega@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sdi-lega <sdi-lega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 18:50:01 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/11 22:15:32 by sdi-lega         ###   ########.fr       */
+/*   Updated: 2021/10/24 19:23:24 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
-static int	g_modifiers[6];
-
-int	ft_get_conv(char **conversion, char chr, va_list arg_list)
+t_size	ft_check_flags(const char *string, int *flags)
 {
-	if (chr == 'c')
-		return (ft_convert_char(conversion, va_arg(arg_list, int)));
-	if (chr == 's')
-		return (ft_convert_str(conversion, va_arg(arg_list, char *)));
-	if (chr == 'p')
-		return (ft_put_hexa(va_arg(arg_list, void *)));
-}
-
-int	is_modifiers(int chr)
-{
-	if (chr == '#')
-		return (1);
-	if (chr == ' ')
-		return (1);
-	if (chr == '.')
-		return (1);
-	if (chr == '+')
-		return (1);
-	if (chr == '-')
-		return (1);
-	if (chr == '0')
-		return (1);
-	return (0);
-}
-
-int	ft_count_modifiers(const char *string)
-{
-	int	index;
+	t_size	index;
 
 	index = 0;
-	while (is_modifiers(string[index]))
+	while (string[index])
 	{
 		if (string[index] == '-')
-			g_modifiers[0] = 1;
+			flags[0] = 1;
 		else if (string[index] == '#')
-			g_modifiers[1] = 1;
+			flags[1] = 1;
 		else if (string[index] == '0')
-			g_modifiers[2] = 1;
+			flags[2] = '0';
 		else if (string[index] == ' ')
-			g_modifiers[3] = 1;
-		else if (string[index] == '.')
-			g_modifiers[4] = 1;
+			flags[3] = 1;
 		else if (string[index] == '+')
-			g_modifiers[5] = 1;
+			flags[5] = 1;
+		else
+			break ;
 		index++;
 	}
 	return (index);
 }
 
+int	ft_get_conv(char chr, va_list args, int *flags)
+{
+	if (chr == 'c')
+		return (convert_char(va_arg(args, int), flags));
+	if (chr == 's')
+		return (convert_str(va_arg(args, char *), flags));
+	if (chr == 'd' || chr == 'i')
+		return (convert_int(va_arg(args, int), flags));
+	if (chr == 'u')
+		return (convert_uint(va_arg(args, unsigned int), flags));
+	if (chr == 'x')
+		return (convert_hexa(va_arg(args, unsigned int), L_HEX, flags));
+	if (chr == 'X')
+		return (convert_hexa(va_arg(args, unsigned int), U_HEX, flags));
+	if (chr == 'p')
+		return (convert_ptr(va_arg(args, unsigned long), L_HEX, flags));
+	if (chr == '%')
+		return (ft_putchar('%'));
+	return (0);
+}
+
+int	ft_count_modifiers(const char *string, int *flags)
+{
+	int	index;
+
+	index = 0;
+	index += ft_check_flags(string, flags);
+	if (ft_isdigit(string[index]))
+	{
+		flags[6] = 0;
+		while (ft_isdigit(string[index]))
+			flags[6] = flags[6] * 10 + string[index++] - '0';
+	}
+	if (string[index] == '.')
+	{
+		flags[4] = 0;
+		index++;
+		while (ft_isdigit(string[index]))
+			flags[4] = flags[4] * 10 + string[index++] - '0';
+	}
+	return (index);
+}
+
+void	reset_flags(int *flags)
+{
+	flags[0] = 0;
+	flags[1] = 0;
+	flags[2] = ' ';
+	flags[3] = 0;
+	flags[4] = -1;
+	flags[5] = 0;
+	flags[6] = -1;
+}
+
 int	ft_printf(const char *string, ...)
 {
-	char	*conversion[1];
-	va_list	args_list;
+	va_list	args;
 	t_size	count;
-	t_size	len;
+	int		flags[7];
 
 	count = 0;
-	len = 0;
-	va_start(args_list, string);
+	va_start(args, string);
 	while (*string)
 	{
 		if (*string == '%')
 		{
 			string++;
-			string += ft_count_modifiers(string);
-			count += ft_get_conv(conversion, *string, args_list);
-			ft_putstr(conversion[0]);
-			string++;
-			free(conversion[0]);
+			reset_flags(flags);
+			string += ft_count_modifiers(string, flags);
+			count += ft_get_conv(*string++, args, flags);
 		}
 		else
-		{
-			write(1, string, 1);
-			string++;
-			count++;
-		}
+			count += ft_putchar(*string++);
 	}
+	va_end(args);
 	return (count);
 }

@@ -5,27 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdi-lega <sdi-lega@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 21:42:58 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/11 22:00:22 by sdi-lega         ###   ########.fr       */
+/*   Created: 2021/10/14 05:40:13 by sdi-lega          #+#    #+#             */
+/*   Updated: 2021/10/14 05:40:36 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_size	ft_putchar(char chr)
+int	ft_isdigit(int i)
 {
-	write(1, &chr, 1);
-	return (1);
+	if ('0' <= i && i <= '9')
+		return (1);
+	return (0);
 }
 
-t_size	ft_putstr(char *string)
+t_size	ft_strlen(const char *string)
 {
-	int	index;
+	t_size	size;
 
-	if (!string)
-		return (ft_putstr("(null)"));
-	index = 0;
-	while (string[index])
-		index += ft_putchar(string[index]);
-	return (index);
+	size = 0;
+	while (string[size])
+		size++;
+	return (size);
 }

@@ -3,22 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdi-lega <sdi-lega@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sdi-lega <sdi-lega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 18:51:10 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/11 22:05:59 by sdi-lega         ###   ########.fr       */
+/*   Updated: 2021/10/24 18:20:06 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+# define U_HEX "0123456789ABCDEF"
+# define L_HEX "0123456789abcdef"
 # include <stdarg.h>
-# include "libft.h"
+# include <stdlib.h>
+# include <unistd.h>
 
-int		ft_printf(const char *string, ...);
-int		ft_put_hexa(void *ptr);
-t_size	ft_putchar(char chr);
-t_size	ft_putstr(char *string);
-t_size	ft_convert_char(char **conversion, char chr);
-t_size	ft_convert_str(char **conversion, char *str);
+typedef unsigned long	t_size;
+
+int				ft_isdigit(int i);
+t_size			ft_strlen(const char *string);
+int				ft_printf(const char *string, ...);
+t_size			ft_putchar(char chr);
+t_size			ft_putstr(char *string);
+void			ft_putnbr(unsigned long nbr, char *base, int radix);
+void			put_padding(int len, char padding);
+t_size			ft_nbr_len(int number, int radix);
+unsigned long	put_sign(int number, int *flags);
+void			ft_nbr_padding(int len, int sign, int *flags);
+int				ft_put_nbr(int len, t_size number, char *base, int *flags);
+t_size			ft_hex_len(unsigned long number, int radix);
+void			ft_put_pre(char *base, unsigned long number, int *flags);
+t_size			convert_hexa(unsigned long number, char *base, int *flags);
+t_size			convert_char(char chr, int *flags);
+t_size			convert_str(char *str, int *flags);
+t_size			convert_int(int number, int *flags);
+t_size			convert_uint(unsigned int number, int *flags);
+int				convert_ptr(unsigned long ptr, char *base, int *flags);
+
 #endif

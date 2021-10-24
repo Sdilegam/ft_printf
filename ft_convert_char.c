@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_convert_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdi-lega <sdi-lega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 05:50:17 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/24 19:22:00 by sdi-lega         ###   ########.fr       */
+/*   Created: 2021/10/14 03:12:33 by sdi-lega          #+#    #+#             */
+/*   Updated: 2021/10/19 15:17:42 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdio.h>
 #include "ft_printf.h"
 
-int main()
+t_size	convert_char(char chr, int *flags)
 {
-	int i;
+	t_size		index;
 
-	i = 1;
-	char *format = "Test n%d: %40.4i %10d\n";
-	int test1 = ft_printf(format, i,  12, 34);
-	i++;
-	int test2 = printf(format, i,  12, 34);
-	printf("%d|%d", test1, test2);
+	index = -1;
+	if (flags[0] != 1 && flags[6] != -1)
+		while (++index < flags[6] - 1)
+			ft_putchar(' ');
+	ft_putchar(chr);
+	if (flags[0] == 1 && flags[6] != -1)
+		while (++index < flags[6] - 1)
+			ft_putchar(' ');
+	if (1 < flags[6] && flags[6] != -1)
+		return (flags[6]);
+	else
+		return (1);
 }
