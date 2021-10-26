@@ -6,7 +6,7 @@
 /*   By: sdi-lega <sdi-lega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:14:18 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/19 15:17:47 by sdi-lega         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:27:04 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_size	ft_hex_len(unsigned long number, int radix)
 	return (len);
 }
 
-void	ft_put_pre(char *base, unsigned long number, int *flags)
+void	ft_put_pre(char *base, int *flags)
 {
 	if (flags[1])
 	{
@@ -48,11 +48,11 @@ t_size	convert_hexa(unsigned long number, char *base, int *flags)
 	if (flags[4] == 0 && number == 0)
 		number_len = 0;
 	if (flags[2] == '0' && flags[4] == -1 && number != 0)
-		ft_put_pre(base, number, flags);
+		ft_put_pre(base, flags);
 	if (!flags[0])
 		ft_nbr_padding(number_len, extra, flags);
 	if ((flags[2] != '0' || flags[4] != -1) && number != 0)
-		ft_put_pre(base, number, flags);
+		ft_put_pre(base, flags);
 	ft_put_nbr(number_len, number, base, flags);
 	if (flags[0])
 		ft_nbr_padding(number_len, extra, flags);

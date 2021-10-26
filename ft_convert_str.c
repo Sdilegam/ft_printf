@@ -6,7 +6,7 @@
 /*   By: sdi-lega <sdi-lega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 03:12:33 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/19 15:18:40 by sdi-lega         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:36:21 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 t_size	convert_str(char *str, int *flags)
 {
-	int		index;
-	t_size	len;
+	int	index;
+	int	len;
 
 	index = -1;
 	if (!str)
 		return (convert_str("(null)", flags));
 	len = ft_strlen(str);
-	if (flags[4] < len)
+	if (flags[4] < len && flags[4] != -1)
 		len = flags[4];
 	if (flags[0] != 1 && flags[6] != -1)
 		while (++index < flags[6] - (int)len)

@@ -6,7 +6,7 @@
 /*   By: sdi-lega <sdi-lega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 18:51:10 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/24 18:20:06 by sdi-lega         ###   ########.fr       */
+/*   Updated: 2021/10/26 15:12:55 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 typedef unsigned long	t_size;
 
 int				ft_isdigit(int i);
-t_size			ft_strlen(const char *string);
+int				ft_strlen(const char *string);
 int				ft_printf(const char *string, ...);
 t_size			ft_putchar(char chr);
 t_size			ft_putstr(char *string);
@@ -32,7 +32,7 @@ unsigned long	put_sign(int number, int *flags);
 void			ft_nbr_padding(int len, int sign, int *flags);
 int				ft_put_nbr(int len, t_size number, char *base, int *flags);
 t_size			ft_hex_len(unsigned long number, int radix);
-void			ft_put_pre(char *base, unsigned long number, int *flags);
+void			ft_put_pre(char *base, int *flags);
 t_size			convert_hexa(unsigned long number, char *base, int *flags);
 t_size			convert_char(char chr, int *flags);
 t_size			convert_str(char *str, int *flags);

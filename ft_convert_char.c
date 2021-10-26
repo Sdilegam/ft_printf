@@ -6,7 +6,7 @@
 /*   By: sdi-lega <sdi-lega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 03:12:33 by sdi-lega          #+#    #+#             */
-/*   Updated: 2021/10/19 15:17:42 by sdi-lega         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:26:46 by sdi-lega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_size	convert_char(char chr, int *flags)
 {
-	t_size		index;
+	int		index;
 
 	index = -1;
 	if (flags[0] != 1 && flags[6] != -1)
